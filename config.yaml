@@ -2,7 +2,7 @@
 
 # The zkEVM Hermez network to join.
 # {mainnet|cardona|bali}
-chain: bali
+chain: mainnet
 
 # The data directory for the databases.
 datadir: /var/lib/cdk-erigon
