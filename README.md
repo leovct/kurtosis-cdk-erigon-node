@@ -7,6 +7,7 @@ This is a [Kurtosis](https://github.com/kurtosis-tech/kurtosis) package that wil
 - [Quickstart](#quickstart)
   - [Deploy a Node](#deploy-a-node)
   - [Configure your Node](#configure-your-node)
+  - [Add a New Network](#add-a-new-network)
 
 ## Quickstart
 
@@ -72,20 +73,46 @@ To tailor your CDK-Erigon node according to your specific needs, explore and adj
 
 Feel free to customize these values and initiate your personalized node. Here's a step-by-step guide:
 
-1. Clone the repository
+1. Clone the repository.
 
 ```bash
 $ git clone https://github.com/leovct/kurtosis-cdk-erigon-node.git
 $ cd kurtosis-cdk-erigon-node
 ```
 
-2. Edit the configuration
+2. Edit the configuration.
 
 ```bash
 $ vi config.yaml
 ```
 
 3. Start the node with your custom parameters.
+
+```bash
+$ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
+```
+
+### Add a New Network
+
+Enhance the versatility of this Kurtosis package by seamlessly integrating a new network.
+
+1. Navigate to the `config/network` directory.
+
+```bash
+$ cd config/network
+```
+
+2. Add your own network configuration. For instance, refer to the existing mainnet configuration [file](./config/network/mainnet.yaml) as a template.
+
+```bash
+$ vi my-network.yaml
+```
+
+Note that certain parameters are shared among all CDK-Erigon nodes and are stored in a separate [file](./config/common.yaml). This modular approach ensures the simplicity and readability of configurations.
+
+3. Adjust the `chain` parameter, in the configuration file (`./config.yaml`), to match your network file name (here, it would be `my-network`).
+
+4. Start the node for your new network.
 
 ```bash
 $ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
