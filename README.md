@@ -99,10 +99,10 @@ Enhance the versatility of this Kurtosis package by seamlessly integrating a new
 1. Navigate to the `config/network` directory.
 
 ```bash
-$ cd config/network
+$ cd config/networks
 ```
 
-2. Add your own network configuration. For instance, refer to the existing mainnet configuration [file](./config/network/mainnet.yaml) as a template.
+2. Add your own network configuration. For instance, refer to the existing mainnet configuration [file](./config/networks/mainnet.yaml) as a template.
 
 ```bash
 $ vi my-network.yaml
