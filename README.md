@@ -8,6 +8,7 @@ This is a [Kurtosis](https://github.com/kurtosis-tech/kurtosis) package that wil
   - [Deploy a Node](#deploy-a-node)
   - [Configure your Node](#configure-your-node)
   - [Add a New Network](#add-a-new-network)
+- [Supported Networks](#supported-networks)
 
 ## Quickstart
 
@@ -117,3 +118,15 @@ Note that certain parameters are shared among all CDK-Erigon nodes and are store
 ```bash
 $ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
 ```
+
+## Supported Networks
+
+Here is the list of networks currently supported. If you wish to add a new one, visit this [section](#add-a-new-network).
+
+| Network | Rootchain | Configuration File |
+| ------- | --------- | ------------------ |
+| zkEVM Mainnet         | Ethereum Mainnet         | [`config/networks/mainnet.yaml`](./config/networks/mainnet.yaml)       |
+| zkEVM Etrog Testnet   | Ethereum Sepolia Testnet | [`config/networks/etrog.yaml`](./config/networks/etrog.yaml)           |
+| zkEVM Cardona Testnet | Ethereum Sepolia Testnet | [`config/networks/cardona.yaml`](./config/networks/cardona.yaml)       |
+| zkEVM Bali Testnet    | Ethereum Sepolia Testnet | [`config/networks/bali.yaml`](./config/networks/bali.yaml)             |
+| X1 Testnet            | Ethereum Sepolia Testnet | [`config/networks/x1-testnet.yaml`](./config/networks/x1-testnet.yaml) |

@@ -1,4 +1,4 @@
-# Configuration specific for a CDK-Erigon node connecting to zkEVM Bali Testnet (built on top of Sepolia).
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Bali Testnet (built on top of Ethereum Sepolia Testnet).
 
 # The name of the testnet to join.
 chain: hermez-cardona-internal

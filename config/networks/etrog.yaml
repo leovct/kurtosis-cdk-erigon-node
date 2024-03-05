@@ -1,0 +1,27 @@
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Etrog Testnet (built on top of Ethereum Sepolia Testnet).
+
+# The name of the testnet to join.
+chain: hermez-etrog
+
+## [L1 configuration]
+# The L1 chain id.
+zkevm.l1-chain-id: 11155111
+# The L1 RPC endpoint
+zkevm.l1-rpc-url: https://rpc.sepolia.org
+
+## [L1 contracts]
+# The address of the Polygon Rollup Manager contract on L1.
+zkevm.l1-polygon-rollup-manager: "0xe40DF1be0d6C310Fb549059E43caf211f13dEB47"
+# The address of the Matic contract on L1.
+zkevm.l1-matic-contract-address: "0x656CD78711fC777b8328439548c5e5e968bdDC56"
+# The address of the Global Exit Root Manager contract on L1.
+zkevm.l1-ger-manager-contract-address: "0x5afcC7EBc379197E011bbA02a014E63b9D3e503F"
+
+## [L2 configuration]
+# The L2 chain id.
+zkevm.l2-chain-id: 10010
+# The RPC endpoint of the sequencer on L2.
+zkevm.l2-sequencer-rpc-url: http://zkevm-json-rpc:8123
+# The URL endpoint of the datastreamer on L2.
+# This component is responsible for sending L2 blocks.
+zkevm.l2-datastreamer-url: 34.175.178.16:6900

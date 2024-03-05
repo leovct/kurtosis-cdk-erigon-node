@@ -1,4 +1,4 @@
-# Configuration specific for a CDK-Erigon node connecting to zkEVM Mainnet (built on top of Ethereum).
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Mainnet (built on top of Ethereum Mainnet).
 
 # The name of the testnet to join.
 chain: hermez-mainnet
