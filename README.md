@@ -72,9 +72,9 @@ $ polycli monitor --rpc-url http://127.0.0.1:50169
 
 ### Configure your Node
 
-To tailor your CDK-Erigon node according to your specific needs, explore and adjust the default [configuration](./config.yaml) file. This file encompasses crucial parameters such as the target blockchain, zkevm configurations, and L1 query parameters like block range, query delay, and the initial block for L1 synchronization.
+To tailor your CDK-Erigon node according to your specific needs, explore and adjust the default [configuration](./config.yaml) file. This file encompasses crucial parameters such as the target blockchain, zkEVM configurations, and L1 query parameters like block range, query delay, and the initial block for L1 synchronization. Feel free to customize these values and initiate your personalized node.
 
-Feel free to customize these values and initiate your personalized node. Here's a step-by-step guide:
+Here's a step-by-step guide:
 
 1. Clone the repository.
 
@@ -94,6 +94,8 @@ $ vi config.yaml
 ```bash
 $ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
 ```
+
+Note: The current version of the CDK-Erigon node is based on the [`zkevm`](https://github.com/0xPolygonHermez/cdk-erigon/tree/zkevm) branch. As soon as Kurtosis supports build-time variables in the Dockerfile (refer to this [issue](https://github.com/kurtosis-tech/kurtosis/issues/2214)), we will be able to pass the CDK-Erigon node version as a configuration parameter in `config.yaml`. This enhancement will provide greater flexibility and ease of configuration for testing CDK-Erigon node versions.
 
 ### Add a New Network
 
