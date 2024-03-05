@@ -1,0 +1,4 @@
+---
+name: github.com/leovct/kurtosis-cdk-erigon-node
+description: |
+  A Kurtosis package that spins up a CDK-Erigon node, optimised for syncing with the Polygon Hermez zkEVM network
