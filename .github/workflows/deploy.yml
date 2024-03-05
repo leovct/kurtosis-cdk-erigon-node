@@ -17,3 +17,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Deploy devnet
         uses: kurtosis-tech/kurtosis-github-action@v1
+        with:
+          path: .
