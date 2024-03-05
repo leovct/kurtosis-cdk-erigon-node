@@ -19,3 +19,4 @@ jobs:
         uses: kurtosis-tech/kurtosis-github-action@v1
         with:
           path: .
+          args: ./config.yaml
