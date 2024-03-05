@@ -53,7 +53,7 @@ def create_cdk_erigon_node_config(
 
     # Create the final configuration file.
     common_config_content = read_file("./config/common.yaml")
-    network_config_content = read_file("./config/{}.yaml".format(chain))
+    network_config_content = read_file("./config/network/{}.yaml".format(chain))
     result = plan.run_sh(
         run='cd /etc/cdk-erigon \
             && mkdir config \
