@@ -1,0 +1,29 @@
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Mainnet (built on top of Ethereum).
+
+# The name of the testnet to join.
+chain: hermez-mainnet
+
+## [L1 configuration]
+# The L1 chain id.
+zkevm.l1-chain-id: 1
+# The L1 RPC endpoint
+zkevm.l1-rpc-url: https://rpc.eth.gateway.fm/
+# The address of the L1 chain.
+zkevm.l1-rollup: "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+
+## [L1 contracts]
+# The address of the Polygon Rollup Manager contract on L1.
+zkevm.l1-polygon-rollup-manager: "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+# The address of the Matic contract on L1.
+zkevm.l1-matic-contract-address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+# The address of the Global Exit Root Manager contract on L1.
+zkevm.l1-ger-manager-contract-address: "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+
+## [L2 configuration]
+# The L2 chain id.
+zkevm.l2-chain-id: 1101
+# The RPC endpoint of the sequencer on L2.
+zkevm.l2-sequencer-rpc-url: https://zkevm-rpc.com
+# The URL endpoint of the datastreamer on L2.
+# This component is responsible for sending L2 blocks.
+zkevm.l2-datastreamer-url: stream.zkevm-rpc.com:6900

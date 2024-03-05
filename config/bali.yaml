@@ -1,4 +1,4 @@
-# Configuration specific for a CDK-Erigon node connecting to Bali Testnet (Sepolia).
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Bali Testnet (built on top of Sepolia).
 
 # The name of the testnet to join.
 chain: hermez-cardona-internal
@@ -18,12 +18,6 @@ zkevm.l1-polygon-rollup-manager: "0xE2EF6215aDc132Df6913C8DD16487aBF118d1764"
 zkevm.l1-matic-contract-address: "0xbA59560D9B3a697745695A01144536514afE0e2B"
 # The address of the Global Exit Root Manager contract on L1.
 zkevm.l1-ger-manager-contract-address: "0x2968D6d736178f8FE7393CC33C87f29D9C287e78"
-
-## [L1 topics]
-# The L1 topic for verification.
-zkevm.l1-topic-verification: "0x9c72852172521097ba7e1482e6b44b351323df0155f97f4ea18fcec28e1f5966"
-# The L1 topic for sequencing.
-zkevm.l1-topic-sequence: "0x3e54d0825ed78523037d00a81759237eb436ce774bd546993ee67a1b67b6e766"
 
 ## [L2 configuration]
 # The L2 chain id.

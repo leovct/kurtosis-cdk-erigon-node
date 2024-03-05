@@ -1,0 +1,29 @@
+# Configuration specific for a CDK-Erigon node connecting to zkEVM Cardona Testnet (built on top of Sepolia).
+
+# The name of the testnet to join.
+chain: hermez-cardona
+
+## [L1 configuration]
+# The L1 chain id.
+zkevm.l1-chain-id: 11155111
+# The L1 RPC endpoint
+zkevm.l1-rpc-url: https://rpc.sepolia.org
+# The address of the L1 chain.
+zkevm.l1-rollup: "0xA13Ddb14437A8F34897131367ad3ca78416d6bCa"
+
+## [L1 contracts]
+# The address of the Polygon Rollup Manager contract on L1.
+zkevm.l1-polygon-rollup-manager: "0x32d33D5137a7cFFb54c5Bf8371172bcEc5f310ff"
+# The address of the Matic contract on L1.
+zkevm.l1-matic-contract-address: "0x1850Dd35dE878238fb1dBa7aF7f929303AB6e8E4"
+# The address of the Global Exit Root Manager contract on L1.
+zkevm.l1-ger-manager-contract-address: "0xAd1490c248c5d3CbAE399Fd529b79B42984277DF"
+
+## [L2 configuration]
+# The L2 chain id.
+zkevm.l2-chain-id: 2442
+# The RPC endpoint of the sequencer on L2.
+zkevm.l2-sequencer-rpc-url: https://rpc.cardona.zkevm-rpc.com/
+# The URL endpoint of the datastreamer on L2.
+# This component is responsible for sending L2 blocks.
+zkevm.l2-datastreamer-url: datastream.cardona.zkevm-rpc.com:6900
