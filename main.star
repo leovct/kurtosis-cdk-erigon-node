@@ -8,7 +8,16 @@ def run(
     zkevm_l1_query_delay=6000,
     zkevm_l1_first_block=4794475,
 ):
-    config = create_cdk_erigon_node_config(plan, chain, datadir, zkevm_rpc_rate_limit, zkevm_data_stream_version, zkevm_l1_block_range, zkevm_l1_query_delay, zkevm_l1_first_block)
+    config = create_cdk_erigon_node_config(
+        plan,
+        chain,
+        datadir,
+        zkevm_rpc_rate_limit,
+        zkevm_data_stream_version,
+        zkevm_l1_block_range,
+        zkevm_l1_query_delay,
+        zkevm_l1_first_block,
+    )
     start_cdk_erigon_node(plan, config)
 
 
@@ -39,7 +48,7 @@ def create_cdk_erigon_node_config(
                 data=user_config_template_data,
             ),
         },
-        name="cdk-erigon-user-config"
+        name="cdk-erigon-user-config",
     )
 
     # Create the final configuration file.
@@ -59,7 +68,9 @@ def create_cdk_erigon_node_config(
         files={
             "/etc/cdk-erigon": user_config,
         },
-        store=[StoreSpec(src="/etc/cdk-erigon/config/*", name="cdk-erigon-final-config")],
+        store=[
+            StoreSpec(src="/etc/cdk-erigon/config/*", name="cdk-erigon-final-config")
+        ],
     )
     return result.files_artifacts[0]
 
