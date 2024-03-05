@@ -7,4 +7,6 @@ FROM debian:bookworm-slim
 LABEL author="devtools@polygon.technology"
 LABEL description="CDK-Erigon builder"
 COPY --from=builder /opt/cdk-erigon/build/bin/cdk-erigon /usr/local/bin/cdk-erigon
-CMD ["cdk-erigon"]
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY ./config/ /etc/cdk-erigon/
+ENTRYPOINT ["cdk-erigon"]
