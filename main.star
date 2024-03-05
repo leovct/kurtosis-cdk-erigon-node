@@ -1,6 +1,6 @@
 def run(
     plan,
-    chain,
+    chain="mainnet",
     datadir="/var/lib/cdk-erigon",
     zkevm_rpc_rate_limit=250,
     zkevm_data_stream_version=2,
