@@ -1,0 +1,18 @@
+# User configuration for a CDK-Erigon node.
+
+# The data directory for the databases.
+datadir: "{{.DATADIR}}"
+
+## [zkEVM configuration]
+# The RPC rate limit in requests per second.
+zkevm.rpc-ratelimit: "{{.ZKEVM_RPC_RATE_LIMIT}}"
+# The stream version indicator (1: PreBigEndian, 2: BigEndian) of the zkevm data stream.
+zkevm.datastream-version: "{{.ZKEVM_DATASTREAM_VERSION}}"
+
+## [L1 query parameters]
+# The block range used to filter verifications and sequences on L1.
+zkevm.l1-block-range: "{{.ZKEVM_L1_BLOCK_RANGE}}"
+# The delay (in ms) between queries for verifications and sequences on L1.
+zkevm.l1-query-delay: "{{.ZKEVM_L1_QUERY_DELAY}}"
+# The first block to start syncing from on L1.
+zkevm.l1-first-block: "{{.ZKEVM_L1_FIRST_BLOCK}}"

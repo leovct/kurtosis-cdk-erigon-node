@@ -1,0 +1,10 @@
+# Configuration shared by all CDK-Erigon nodes.
+
+# The HTTP-RPC server listening port.
+http.addr: 0.0.0.0
+# The APIs offered over the HTTP-RPC interface.
+http.api: [eth,debug,net,trace,web3,erigon,zkevm]
+# Disable the internal txpool and block producer (experimental).
+txpool.disable: true
+# Enable external consensus.
+externalcl: true

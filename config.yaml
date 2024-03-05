@@ -1,0 +1,22 @@
+# User configuration for a CDK-Erigon node.
+
+# The zkEVM Hermez network to join.
+# {mainnet|cardona|bali}
+chain: bali
+
+# The data directory for the databases.
+datadir: /var/lib/cdk-erigon
+
+## [zkEVM configuration]
+# The RPC rate limit in requests per second.
+zkevm_rpc_rate_limit: 250
+# The stream version indicator (1: PreBigEndian, 2: BigEndian) of the zkevm data stream.
+zkevm_data_stream_version: 2
+
+## [L1 query parameters]
+# The block range used to filter verifications and sequences on L1.
+zkevm_l1_block_range: 20000
+# The delay (in ms) between queries for verifications and sequences on L1.
+zkevm_l1_query_delay: 6000
+# The first block to start syncing from on L1.
+zkevm_l1_first_block: 4794475
