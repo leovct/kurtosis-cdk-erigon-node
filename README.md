@@ -26,6 +26,8 @@ $ kurtosis run --enclave cdk-erigon github.com/leovct/kurtosis-cdk-erigon-node '
 $ kurtosis run --enclave cdk-erigon github.com/leovct/kurtosis-cdk-erigon-node '{chain: bali}'
 ```
 
+The list of networks currently supported is available [here](#supported-networks).
+
 Once the command is executed, observe the output, especially the exposed port (here, 50169), which corresponds to the HTTP-RPC server of the CDK-Erigon node.
 
 ```bash
@@ -123,8 +125,8 @@ $ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
 
 Here is the list of networks currently supported. If you wish to add a new one, visit this [section](#add-a-new-network).
 
-| Network | Rootchain | Configuration File |
-| ------- | --------- | ------------------ |
+| Network               | Rootchain                | Configuration File                                                     |
+| --------------------- | ------------------------ | ---------------------------------------------------------------------- |
 | zkEVM Mainnet         | Ethereum Mainnet         | [`config/networks/mainnet.yaml`](./config/networks/mainnet.yaml)       |
 | zkEVM Etrog Testnet   | Ethereum Sepolia Testnet | [`config/networks/etrog.yaml`](./config/networks/etrog.yaml)           |
 | zkEVM Cardona Testnet | Ethereum Sepolia Testnet | [`config/networks/cardona.yaml`](./config/networks/cardona.yaml)       |
