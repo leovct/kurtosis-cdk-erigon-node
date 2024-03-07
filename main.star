@@ -1,6 +1,6 @@
 def run(
     plan,
-    chain="mainnet",
+    chain="cardona",
     datadir="/var/lib/cdk-erigon",
     zkevm_rpc_rate_limit=250,
     zkevm_data_stream_version=2,
@@ -18,7 +18,6 @@ def run(
         zkevm_l1_query_delay,
         zkevm_l1_first_block,
     )
-    start_cdk_erigon_node(plan, config)
 
 
 def create_cdk_erigon_node_config(
@@ -76,7 +75,7 @@ def create_cdk_erigon_node_config(
 
 
 def start_cdk_erigon_node(plan, config):
-    plan.add_service(
+    erigon_node = plan.add_service(
         name="cdk-erigon-node",
         config=ServiceConfig(
             image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
@@ -85,3 +84,4 @@ def start_cdk_erigon_node(plan, config):
             cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
         ),
     )
+    return erigon_node.ip_address
