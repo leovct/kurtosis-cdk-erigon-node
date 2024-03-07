@@ -1,3 +1,6 @@
+blockscout = import_module("github.com/leovct/kurtosis-blockscout/main.star")
+
+
 def run(
     plan,
     chain="cardona",
@@ -18,6 +21,10 @@ def run(
         zkevm_l1_query_delay,
         zkevm_l1_first_block,
     )
+    erigon_node_host = start_cdk_erigon_node(plan, config)
+
+    rpc_http_url = "http://{}:8545".format(erigon_node_host)
+    blockscout.run(plan, rpc_http_url)
 
 
 def create_cdk_erigon_node_config(
