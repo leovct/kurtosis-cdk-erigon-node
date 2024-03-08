@@ -1,6 +1,7 @@
 FROM golang:1.19 as builder
 WORKDIR /opt/cdk-erigon
-RUN git clone --branch zkevm https://github.com/0xPolygonHermez/cdk-erigon . \
+ARG CDK_ERIGON_VERSION
+RUN git clone --branch ${CDK_ERIGON_VERSION} https://github.com/0xPolygonHermez/cdk-erigon . \
   && make cdk-erigon
 
 FROM debian:bookworm-slim

@@ -1,5 +1,8 @@
 # User configuration for a CDK-Erigon node.
 
+# The version of the CDK-Erigon node to run.
+cdk_erigon_version: zkevm
+
 # The zkEVM Hermez network to join.
 # {mainnet|cardona|bali}
 chain: cardona

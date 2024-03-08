@@ -3,6 +3,7 @@ blockscout = import_module("github.com/leovct/kurtosis-blockscout/main.star")
 
 def run(
     plan,
+    cdk_erigon_version="zkevm",
     chain="cardona",
     datadir="/var/lib/cdk-erigon",
     zkevm_rpc_rate_limit=250,
@@ -21,7 +22,7 @@ def run(
         zkevm_l1_query_delay,
         zkevm_l1_first_block,
     )
-    erigon_node_host = start_cdk_erigon_node(plan, config)
+    erigon_node_host = start_cdk_erigon_node(plan, cdk_erigon_version, config)
 
     rpc_http_url = "http://{}:8545".format(erigon_node_host)
     blockscout.run(plan, rpc_http_url)
@@ -81,11 +82,14 @@ def create_cdk_erigon_node_config(
     return result.files_artifacts[0]
 
 
-def start_cdk_erigon_node(plan, config):
+def start_cdk_erigon_node(plan, cdk_erigon_version, config):
     erigon_node = plan.add_service(
         name="cdk-erigon-node",
         config=ServiceConfig(
             image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
+            build_args={
+                "CDK_ERIGON_VERSION": cdk_erigon_version,
+            },
             files={"/etc/cdk-erigon": config},
             ports={"http_rpc": PortSpec(8545, application_protocol="http")},
             cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
