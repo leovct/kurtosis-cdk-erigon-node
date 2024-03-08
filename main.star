@@ -10,6 +10,7 @@ def run(
     zkevm_l1_block_range=20000,
     zkevm_l1_query_delay=6000,
     zkevm_l1_first_block=4794475,
+    deploy_blockscout=False,
 ):
     config = create_cdk_erigon_node_config(
         plan,
@@ -23,8 +24,9 @@ def run(
     )
     erigon_node_host = start_cdk_erigon_node(plan, config)
 
-    rpc_http_url = "http://{}:8545".format(erigon_node_host)
-    blockscout.run(plan, rpc_http_url)
+    if deploy_blockscout:
+        rpc_http_url = "http://{}:8545".format(erigon_node_host)
+        blockscout.run(plan, rpc_http_url)
 
 
 def create_cdk_erigon_node_config(
