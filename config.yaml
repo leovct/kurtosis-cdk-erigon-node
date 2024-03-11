@@ -22,4 +22,4 @@ zkevm_l1_query_delay: 6000
 zkevm_l1_first_block: 4794475
 
 # Deploy a Blockscout blockchain explorer with the node.
-deploy_blockscout: true
+deploy_blockscout: false
