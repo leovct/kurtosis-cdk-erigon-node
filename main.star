@@ -10,9 +10,11 @@ def run(
     zkevm_l1_block_range=20000,
     zkevm_l1_query_delay=6000,
     zkevm_l1_first_block=4794475,
+    persistent=True,
     deploy_blockscout=False,
 ):
-    config = create_cdk_erigon_node_config(
+    # Start the CDK-Erigon node.
+    config = generate_config(
         plan,
         chain,
         datadir,
@@ -22,14 +24,43 @@ def run(
         zkevm_l1_query_delay,
         zkevm_l1_first_block,
     )
-    erigon_node_host = start_cdk_erigon_node(plan, config)
+    rpc_http_url = start_node(plan, config, persistent, datadir)
 
+    # Start a blockchain explorer if needed.
     if deploy_blockscout:
-        rpc_http_url = "http://{}:8545".format(erigon_node_host)
         blockscout.run(plan, rpc_http_url)
 
 
-def create_cdk_erigon_node_config(
+def start_node(plan, config, persistent, datadir):
+    """
+    Start a CDK-Erigon node.
+
+    Args:
+        config (file): Configuration file.
+        persistent (boolean): Wether the data should be persisted.
+        datadir (string): The directory where chain data will be stored.
+
+    Returns:
+        The JSON-RPC HTTP URL of the node.
+    """
+    files = {}
+    files["/etc/cdk-erigon"] = config
+    if persistent:
+        files[datadir] = Directory(persistent_key="cdk-erigon-node-data")
+
+    service = plan.add_service(
+        name="cdk-erigon-node",
+        config=ServiceConfig(
+            image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
+            files=files,
+            ports={"http_rpc": PortSpec(8545, application_protocol="http")},
+            cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
+        ),
+    )
+    return "http://{hostname}:8545".format(hostname=service.ip_address)
+
+
+def generate_config(
     plan,
     chain,
     datadir,
@@ -39,7 +70,28 @@ def create_cdk_erigon_node_config(
     zkevm_l1_query_delay,
     zkevm_l1_first_block,
 ):
-    # Create the user configuration file.
+    """
+    Generate CDK-Erigon node configuration file.
+
+    It generates/loads a bunch of configuration files:
+    - User config (see `config/user.yaml`).
+    - Common config (see `config/user.yaml`).
+    - Network-specific config (see `config/networks/`).
+    Then the configuration files are aggregated into a final configuration file.
+
+    Args:
+        chain (string):  The name of the chain.
+        datadir (string): The directory where chain data will be stored.
+        zkevm_rpc_rate_limit (int): The RPC rate limit in requests per second.
+        zkevm_data_stream_version (int): The stream version indicator (1: PreBigEndian, 2: BigEndian) of the zkEVM data stream.
+        zkevm_l1_block_range (int): The block range used to filter verifications and sequences on L1.
+        zkevm_l1_query_delay (int): The delay (in ms) between queries for verifications and sequences on L1.
+        zkevm_l1_first_block (int): The first block to start syncing from on L1.
+
+    Returns:
+        The configuration file.
+    """
+    # Generate the user configuration file.
     user_config_template = read_file("./config/user.yaml")
     user_config_template_data = {
         "DATADIR": datadir,
@@ -59,9 +111,11 @@ def create_cdk_erigon_node_config(
         name="cdk-erigon-user-config",
     )
 
-    # Create the final configuration file.
+    # Load the common and network-specific configuration files.
     common_config_content = read_file("./config/common.yaml")
     network_config_content = read_file("./config/networks/{}.yaml".format(chain))
+
+    # Generate the final configuration file.
     result = plan.run_sh(
         run='cd /etc/cdk-erigon \
             && mkdir config \
@@ -81,16 +135,3 @@ def create_cdk_erigon_node_config(
         ],
     )
     return result.files_artifacts[0]
-
-
-def start_cdk_erigon_node(plan, config):
-    erigon_node = plan.add_service(
-        name="cdk-erigon-node",
-        config=ServiceConfig(
-            image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
-            files={"/etc/cdk-erigon": config},
-            ports={"http_rpc": PortSpec(8545, application_protocol="http")},
-            cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
-        ),
-    )
-    return erigon_node.ip_address
