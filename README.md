@@ -6,6 +6,7 @@ This is a [Kurtosis](https://github.com/kurtosis-tech/kurtosis) package that wil
 
 - [Quickstart](#quickstart)
   - [Deploy a Node](#deploy-a-node)
+  - [Node Integrity Check](#node-integrity-check)
   - [Configure your Node](#configure-your-node)
   - [Add a New Network](#add-a-new-network)
 - [Supported Networks](#supported-networks)
@@ -64,10 +65,39 @@ Connect to the node:
 $ kurtosis service shell cdk-erigon cdk-erigon-node
 ```
 
-Finnally, to monitor the node, you can use [polycli](https://github.com/maticnetwork/polygon-cli).
+Finally, to monitor the node, you can use [polycli](https://github.com/maticnetwork/polygon-cli).
 
 ```bash
 $ polycli monitor --rpc-url http://127.0.0.1:50169
+```
+
+### Node Integrity Check
+
+Here are quick steps to ensure your node is synced and working correctly. For this example, we will sync against the Bali Testnet.
+
+
+First, verify your node sync status.
+
+```bash
+$ curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://127.0.0.1:50169
+{"jsonrpc":"2.0","id":1,"result":false}
+```
+
+Second, retrieve the latest block number (e.g. from the local node).
+
+```bash
+$ cast bn --rpc-url http://127.0.0.1:50169
+1285203
+```
+
+Third and finally, compare state roots of local node RPC and sequencer RPC URLs for the latest block. They should match!
+
+```bash
+$ cast block 1285203 --rpc-url http://127.0.0.1:50169 --json | jq -r .stateRoot
+0x54ee9fed29133351f1f49259ab47021fd06816210e1b16d0402de042ffb16e50
+
+$ cast block 1285203 --rpc-url https://rpc.internal.zkevm-rpc.com --json | jq -r .stateRoot
+0x54ee9fed29133351f1f49259ab47021fd06816210e1b16d0402de042ffb16e50
 ```
 
 ### Configure your Node
