@@ -3,6 +3,7 @@ blockscout = import_module("github.com/leovct/kurtosis-blockscout/main.star")
 
 def run(
     plan,
+    cdk_erigon_version="zkevm",
     chain="cardona",
     datadir="/var/lib/cdk-erigon",
     zkevm_rpc_rate_limit=250,
@@ -24,14 +25,14 @@ def run(
         zkevm_l1_query_delay,
         zkevm_l1_first_block,
     )
-    rpc_http_url = start_node(plan, config, persistent, datadir)
+    rpc_http_url = start_node(plan, cdk_erigon_version, config, persistent, datadir)
 
     # Start a blockchain explorer if needed.
     if deploy_blockscout:
         blockscout.run(plan, rpc_http_url)
 
 
-def start_node(plan, config, persistent, datadir):
+def start_node(plan, cdk_erigon_version, config, persistent, datadir):
     """
     Start a CDK-Erigon node.
 
@@ -51,7 +52,13 @@ def start_node(plan, config, persistent, datadir):
     service = plan.add_service(
         name="cdk-erigon-node",
         config=ServiceConfig(
-            image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
+            image=ImageBuildSpec(
+                image_name="cdk-erigon",
+                build_context_dir=".",
+                build_args={
+                    "CDK_ERIGON_VERSION": cdk_erigon_version,
+                },
+            ),
             files=files,
             ports={"http_rpc": PortSpec(8545, application_protocol="http")},
             cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
