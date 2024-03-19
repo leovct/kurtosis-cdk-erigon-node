@@ -52,10 +52,13 @@ def start_node(plan, cdk_erigon_version, config, persistent, datadir):
     service = plan.add_service(
         name="cdk-erigon-node",
         config=ServiceConfig(
-            image=ImageBuildSpec(image_name="cdk-erigon", build_context_dir="."),
-            build_args={
-                "CDK_ERIGON_VERSION": cdk_erigon_version,
-            },
+            image=ImageBuildSpec(
+                image_name="cdk-erigon",
+                build_context_dir=".",
+                build_args={
+                    "CDK_ERIGON_VERSION": cdk_erigon_version,
+                },
+            ),
             files=files,
             ports={"http_rpc": PortSpec(8545, application_protocol="http")},
             cmd=["--config=/etc/cdk-erigon/config.yaml", "--maxpeers=0"],
