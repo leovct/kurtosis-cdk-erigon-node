@@ -6,6 +6,7 @@ This is a [Kurtosis](https://github.com/kurtosis-tech/kurtosis) package that wil
 
 - [Quickstart](#quickstart)
   - [Deploy a Node](#deploy-a-node)
+  - [Node Integrity Check](#node-integrity-check)
   - [Configure your Node](#configure-your-node)
   - [Add a New Network](#add-a-new-network)
 - [Supported Networks](#supported-networks)
@@ -64,15 +65,44 @@ Connect to the node:
 $ kurtosis service shell cdk-erigon cdk-erigon-node
 ```
 
-Finnally, to monitor the node, you can use [polycli](https://github.com/maticnetwork/polygon-cli).
+Finally, to monitor the node, you can use [polycli](https://github.com/maticnetwork/polygon-cli).
 
 ```bash
 $ polycli monitor --rpc-url http://127.0.0.1:50169
 ```
 
+### Node Integrity Check
+
+Here are quick steps to ensure your node is synced and working correctly. For this example, we will sync against the Bali Testnet.
+
+
+First, verify your node sync status.
+
+```bash
+$ curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://127.0.0.1:50169
+{"jsonrpc":"2.0","id":1,"result":false}
+```
+
+Second, retrieve the latest block number (e.g. from the local node).
+
+```bash
+$ cast bn --rpc-url http://127.0.0.1:50169
+1285203
+```
+
+Third and finally, compare state roots of local node RPC and sequencer RPC URLs for the latest block. They should match!
+
+```bash
+$ cast block 1285203 --rpc-url http://127.0.0.1:50169 --json | jq -r .stateRoot
+0x54ee9fed29133351f1f49259ab47021fd06816210e1b16d0402de042ffb16e50
+
+$ cast block 1285203 --rpc-url https://rpc.internal.zkevm-rpc.com --json | jq -r .stateRoot
+0x54ee9fed29133351f1f49259ab47021fd06816210e1b16d0402de042ffb16e50
+```
+
 ### Configure your Node
 
-To tailor your CDK-Erigon node according to your specific needs, explore and adjust the default [configuration](./config.yaml) file. This file encompasses crucial parameters such as the target blockchain, zkEVM configurations, and L1 query parameters like block range, query delay, and the initial block for L1 synchronization. Feel free to customize these values and initiate your personalized node.
+To tailor your CDK-Erigon node according to your specific needs, explore and adjust the default configuration file (`config.yaml`). This file encompasses crucial parameters such as the target blockchain, zkEVM configurations, and L1 query parameters like block range, query delay, and the initial block for L1 synchronization. Feel free to customize these values and initiate your personalized node.
 
 Here's a step-by-step guide:
 
@@ -92,7 +122,7 @@ $ vi config.yaml
 3. Start the node with your custom parameters.
 
 ```bash
-$ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
+$ kurtosis run --enclave cdk-erigon --args-file config.yaml .
 ```
 
 Note: The current version of the CDK-Erigon node is based on the [`zkevm`](https://github.com/0xPolygonHermez/cdk-erigon/tree/zkevm) branch. As soon as Kurtosis supports build-time variables in the Dockerfile (refer to this [issue](https://github.com/kurtosis-tech/kurtosis/issues/2214)), we will be able to pass the CDK-Erigon node version as a configuration parameter in `config.yaml`. This enhancement will provide greater flexibility and ease of configuration for testing CDK-Erigon node versions.
@@ -107,30 +137,30 @@ Enhance the versatility of this Kurtosis package by seamlessly integrating a new
 $ cd config/networks
 ```
 
-2. Add your own network configuration. For instance, refer to the existing mainnet configuration [file](./config/networks/mainnet.yaml) as a template.
+2. Add your own network configuration. For instance, refer to the existing mainnet configuration file (`config/networks/mainnet.yaml`) as a template.
 
 ```bash
 $ vi my-network.yaml
 ```
 
-Note that certain parameters are shared among all CDK-Erigon nodes and are stored in a separate [file](./config/common.yaml). This modular approach ensures the simplicity and readability of configurations.
+Note that certain parameters are shared among all CDK-Erigon nodes and are stored in a separate file (`config/common.yaml`). This modular approach ensures the simplicity and readability of configurations.
 
-3. Adjust the `chain` parameter, in the configuration file (`./config.yaml`), to match your network file name (here, it would be `my-network`).
+3. Adjust the `chain` parameter, in the configuration file (`config.yaml`), to match your network file name (here, it would be `my-network`).
 
 4. Start the node for your new network.
 
 ```bash
-$ kurtosis run --enclave cdk-erigon --args-file ./config.yaml .
+$ kurtosis run --enclave cdk-erigon --args-file config.yaml .
 ```
 
 ## Supported Networks
 
 Here is the list of networks currently supported. If you wish to add a new one, visit this [section](#add-a-new-network).
 
-| Network               | Rootchain                | Configuration File                                                     |
-| --------------------- | ------------------------ | ---------------------------------------------------------------------- |
-| zkEVM Mainnet         | Ethereum Mainnet         | [`config/networks/mainnet.yaml`](./config/networks/mainnet.yaml)       |
-| zkEVM Etrog Testnet   | Ethereum Sepolia Testnet | [`config/networks/etrog.yaml`](./config/networks/etrog.yaml)           |
-| zkEVM Cardona Testnet | Ethereum Sepolia Testnet | [`config/networks/cardona.yaml`](./config/networks/cardona.yaml)       |
-| zkEVM Bali Testnet    | Ethereum Sepolia Testnet | [`config/networks/bali.yaml`](./config/networks/bali.yaml)             |
-| X1 Testnet            | Ethereum Sepolia Testnet | [`config/networks/x1-testnet.yaml`](./config/networks/x1-testnet.yaml) |
+| Network               | Rootchain                | Configuration File                |
+| --------------------- | ------------------------ | --------------------------------- |
+| zkEVM Mainnet         | Ethereum Mainnet         | `config/networks/mainnet.yaml`    |
+| zkEVM Etrog Testnet   | Ethereum Sepolia Testnet | `config/networks/etrog.yaml`      |
+| zkEVM Cardona Testnet | Ethereum Sepolia Testnet | `config/networks/cardona.yaml`    |
+| zkEVM Bali Testnet    | Ethereum Sepolia Testnet | `config/networks/bali.yaml`       |
+| X1 Testnet            | Ethereum Sepolia Testnet | `config/networks/x1-testnet.yaml` |

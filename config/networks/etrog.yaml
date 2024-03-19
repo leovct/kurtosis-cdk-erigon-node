@@ -17,6 +17,12 @@ zkevm.l1-matic-contract-address: "0x656CD78711fC777b8328439548c5e5e968bdDC56"
 # The address of the Global Exit Root Manager contract on L1.
 zkevm.l1-ger-manager-contract-address: "0x5afcC7EBc379197E011bbA02a014E63b9D3e503F"
 
+## [zkEVM L1 topics]
+# The L1 topic for verification.
+zkevm.l1-topic-verification: "0x9c72852172521097ba7e1482e6b44b351323df0155f97f4ea18fcec28e1f5966"
+# The L1 topic for sequencing.
+zkevm.l1-topic-sequence: "0x3e54d0825ed78523037d00a81759237eb436ce774bd546993ee67a1b67b6e766"
+
 ## [L2 configuration]
 # The L2 chain id.
 zkevm.l2-chain-id: 10010

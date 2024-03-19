@@ -6,7 +6,7 @@ datadir: "{{.DATADIR}}"
 ## [zkEVM configuration]
 # The RPC rate limit in requests per second.
 zkevm.rpc-ratelimit: "{{.ZKEVM_RPC_RATE_LIMIT}}"
-# The stream version indicator (1: PreBigEndian, 2: BigEndian) of the zkevm data stream.
+# The stream version indicator (1: PreBigEndian, 2: BigEndian) of the zkEVM data stream.
 zkevm.datastream-version: "{{.ZKEVM_DATASTREAM_VERSION}}"
 
 ## [L1 query parameters]

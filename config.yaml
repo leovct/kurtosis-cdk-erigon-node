@@ -23,3 +23,6 @@ zkevm_l1_block_range: 20000
 zkevm_l1_query_delay: 6000
 # The first block to start syncing from on L1.
 zkevm_l1_first_block: 4794475
+
+# Deploy a Blockscout blockchain explorer with the node.
+deploy_blockscout: false
